@@ -10,12 +10,9 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 require __DIR__ . '/vendor/autoload.php';
 
 use Dotenv\Dotenv;
-use Enfrte\WooApiProxy\Plugin;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-// new Plugin();
-
-new Bootstrap5Support();
+new BootStrap5Support();
 new RegisterRestRoutes();

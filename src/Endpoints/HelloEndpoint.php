@@ -1,5 +1,10 @@
 <?php
 
+namespace Enfrte\WooApiProxy\Endpoints;
+
+use Exception;
+
+
 class HelloEndpoint
 {
     // public function handle(\WP_REST_Request $request)

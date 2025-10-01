@@ -1,10 +1,17 @@
 <?php
 
+namespace Enfrte\WooApiProxy;
+
+use Automattic\WooCommerce\Client;
+
+use Enfrte\WooApiProxy\Endpoints\HelloEndpoint;
+use Enfrte\WooApiProxy\Endpoints\AddToCartEndpoint;
+
 class RegisterRestRoutes
 {
     const ROUTE_PATH = 'woo-proxy/v1';
 
-    private $woocommerce;
+    protected $woocommerce;
 
     public function __construct()
     {
@@ -31,7 +38,7 @@ class RegisterRestRoutes
         ]);
 
         // AddToCartEndpoint endpoint
-        $addToCart = new AddToCartEndpoint( $this->$woocommerce );
+        $addToCart = new AddToCartEndpoint();
         register_rest_route(self::ROUTE_PATH, '/add-to-cart', [
             'methods'  => 'POST',
             'callback' => [$addToCart, 'handle'],

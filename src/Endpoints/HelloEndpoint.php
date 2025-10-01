@@ -7,13 +7,6 @@ use Exception;
 
 class HelloEndpoint
 {
-    // public function handle(\WP_REST_Request $request)
-    // {
-    //     return [
-    //         'message' => 'Hello from HelloEndpoint class!',
-    //     ];
-    // }
-
     public function handle(\WP_REST_Request $request) {
         try {
             return new \WP_REST_Response([

@@ -14,5 +14,5 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-new BootStrap5Support();
+new Bootstrap5Support();
 new RegisterRestRoutes();

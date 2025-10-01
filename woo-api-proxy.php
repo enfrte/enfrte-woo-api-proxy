@@ -9,7 +9,12 @@ if ( ! defined( 'ABSPATH' ) ) exit;
 
 require __DIR__ . '/vendor/autoload.php';
 
+// Vendor
 use Dotenv\Dotenv;
+
+// Local
+use Enfrte\WooApiProxy\Bootstrap5Support;
+use Enfrte\WooApiProxy\RegisterRestRoutes;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();

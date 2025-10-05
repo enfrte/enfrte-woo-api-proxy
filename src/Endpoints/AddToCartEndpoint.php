@@ -7,9 +7,14 @@ use WC_Session_Handler;
 use WC_Cart;
 use WP_Error;
 use WP_REST_Request;
-use WP_REST_Response;
 use Exception;
+use Enfrte\WooApiProxy\Libs\LatteEngine;
+use Enfrte\WooApiProxy\HtmlResponse;
 
+
+/**
+ * TODO: Leave handle. Break out the other methods into helper class for other endpoints.
+ */
 class AddToCartEndpoint
 {
 	/**
@@ -33,16 +38,32 @@ class AddToCartEndpoint
 
 			WC()->cart->add_to_cart($product_id, $quantity);
 
-			return rest_ensure_response([
-				'success'    => true,
-				'cart_id'    => $cart_id,
-				'product_id' => $product_id,
-				'quantity'   => $quantity,
-				'remove_from_cart_text' => 'Remove from cart',
-				'cart_count' => WC()->cart->get_cart_contents_count(),
-				'cart_items' => WC()->cart->get_cart(),
-				'cart_total' => WC()->cart->get_cart_total(),
-			]);
+			return new HtmlResponse(
+                LatteEngine::latteRenderToString(
+					'add_to_cart.latte', 
+					[
+						'success'    => true,
+						'cart_id'    => $cart_id,
+						'product_id' => $product_id,
+						'quantity'   => $quantity,
+						'remove_from_cart_text' => 'Remove from cart',
+						'cart_count' => WC()->cart->get_cart_contents_count(),
+						'cart_items' => WC()->cart->get_cart(),
+						'cart_total' => WC()->cart->get_cart_total(),
+					]
+				)
+            );
+
+			// return rest_ensure_response([
+			// 	'success'    => true,
+			// 	'cart_id'    => $cart_id,
+			// 	'product_id' => $product_id,
+			// 	'quantity'   => $quantity,
+			// 	'remove_from_cart_text' => 'Remove from cart',
+			// 	'cart_count' => WC()->cart->get_cart_contents_count(),
+			// 	'cart_items' => WC()->cart->get_cart(),
+			// 	'cart_total' => WC()->cart->get_cart_total(),
+			// ]);
 		} catch (Exception $e) {
 			return $this->error('endpoint_error', $e->getMessage(), 500);
 		}

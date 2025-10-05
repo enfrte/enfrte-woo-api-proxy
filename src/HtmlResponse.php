@@ -2,7 +2,6 @@
 
 namespace Enfrte\WooApiProxy;
 
-use Enfrte\WooApiProxy\Libs\LatteEngine;
 use WP_REST_Response;
 
 /**

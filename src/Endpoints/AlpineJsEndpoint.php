@@ -5,10 +5,7 @@ namespace Enfrte\WooApiProxy\Endpoints;
 use Exception;
 use WP_REST_Request;
 use WP_REST_Response;
-use WP_HTTP_Response;
 use WP_Error;
-use Enfrte\WooApiProxy\Libs\LatteEngine;
-use Enfrte\WooApiProxy\HtmlResponse;
 
 class AlpineJsEndpoint
 {

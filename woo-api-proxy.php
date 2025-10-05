@@ -13,11 +13,11 @@ require __DIR__ . '/vendor/autoload.php';
 use Dotenv\Dotenv;
 
 // Local
-use Enfrte\WooApiProxy\Bootstrap5Support;
+use Enfrte\WooApiProxy\Enqueued\Bootstrap5;
 use Enfrte\WooApiProxy\RegisterRestRoutes;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->safeLoad();
 
-new Bootstrap5Support();
+new Bootstrap5();
 new RegisterRestRoutes();

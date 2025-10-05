@@ -38,6 +38,7 @@ class AddToCartEndpoint
 				'cart_id'    => $cart_id,
 				'product_id' => $product_id,
 				'quantity'   => $quantity,
+				'remove_from_cart_text' => 'Remove from cart',
 				'cart_count' => WC()->cart->get_cart_contents_count(),
 				'cart_items' => WC()->cart->get_cart(),
 				'cart_total' => WC()->cart->get_cart_total(),

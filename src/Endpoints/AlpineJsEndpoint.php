@@ -10,21 +10,14 @@ use WP_Error;
 use Enfrte\WooApiProxy\Libs\LatteEngine;
 use Enfrte\WooApiProxy\HtmlResponse;
 
-class HelloEndpoint
+class AlpineJsEndpoint
 {
     public function handle(WP_REST_Request $request) {
         try {
-            // Return json 
-            // return new WP_REST_Response([
-            //     'message' => 'Hello from HelloEndpoint class!',
-            //     'status' => 'success'
-            // ], 200);
-
-            // return new HtmlResponse('<h1>HTML!</h1>');
-
-            return new HtmlResponse(
-                LatteEngine::latteRenderToString('index.latte', ['name' => ' Leon'])
-            );
+            return new WP_REST_Response([
+                'message' => 'Hello from AlpineJsEndpoint class!',
+                'status' => 'success'
+            ], 200);
         } 
         catch (Exception $e) {
             return new WP_Error('endpoint_error', $e->getMessage(), ['status' => 500]);

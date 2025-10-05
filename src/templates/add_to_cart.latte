@@ -2,14 +2,14 @@
 	<form 
 		hx-post="/wp-json/woo-proxy/v1/add-to-cart"
 		hx-trigger="submit">
-		<input type="hidden" name="product_id" value="{$product->get_id}">
+		<input type="hidden" name="product_id" value="{$product_id}">
 		<input type="hidden" name="quantity" value="1">
 		<button type="submit" class="btn btn-primary">
-			{$product->remove_from_cart_text}
+			{$remove_from_cart_text}
 		</button>
 	</form>
 
 	<p class="fw-bold mb-0 ms-3">
-		{$product->price}
-	</p>									
+		{$cart_total}
+	</p>
 </div>

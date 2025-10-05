@@ -1,11 +1,10 @@
 <?php
 
-namespace Enfrte\WooApiProxy;
+namespace Enfrte\WooApiProxy\Enqueued;
 
-class Bootstrap5Support {
+class Bootstrap5 {
     public function __construct() {
         add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_assets' ] );
-        add_shortcode( 'bs5_products', [ $this, 'render_products' ] );
     }
 
     public function enqueue_assets() {

@@ -7,13 +7,13 @@ use WC_Session_Handler;
 use WC_Cart;
 use WP_Error;
 use WP_REST_Request;
+use WP_REST_Response;
 use Exception;
 
 class AddToCartEndpoint
 {
 	/**
 	 * @param WP_REST_Request $request
-	 * @return void
 	 */
 	public function handle(WP_REST_Request $request)
 	{

@@ -1,0 +1,16 @@
+<button 
+	class="btn btn-primary me-3"
+	{if cart_action == 'POST'}
+	hx-post="/wp-json/woo-proxy/v1/cart-product"
+	{elseif cart_action == 'DELETE'}
+	hx-delete="/wp-json/woo-proxy/v1/cart-product"
+	{/if}
+	hx-target="cart-product-action-container"
+	hx-swap="outerHTML"
+	hx-include="closest form">
+	{$cart_action_text}
+</button>
+
+<p class="fw-bold mb-0">
+	{$cart_total|noescape}
+</p>

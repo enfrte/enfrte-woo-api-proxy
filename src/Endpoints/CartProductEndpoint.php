@@ -10,63 +10,79 @@ use WP_REST_Request;
 use Exception;
 use Enfrte\WooApiProxy\Libs\LatteEngine;
 use Enfrte\WooApiProxy\HtmlResponse;
+use WP_REST_Response;
 
 
 /**
  * TODO: Leave handle. Break out the other methods into helper class for other endpoints.
  */
-class AddToCartEndpoint
+class CartProductEndpoint
 {
 	/**
+	 * @var WP_REST_Request
+	 */
+	protected $request;
+
+	/**
+	 * Entry point for requests
+	 * 
 	 * @param WP_REST_Request $request
 	 */
 	public function handle(WP_REST_Request $request)
 	{
 		try {
-			$data = $this->parseRequest($request);
-
-			$product_id = absint($data['product_id'] ?? 0);
-			$quantity   = absint($data['quantity'] ?? 1);
-
-			if (!$product_id) {
-				return $this->error('no_product', 'Product ID is required', 400);
-			}
-
-			$cart_id = $this->resolveCartId($data);
-
-			$this->initWooSession($cart_id);
-
-			WC()->cart->add_to_cart($product_id, $quantity);
-
-			return new HtmlResponse(
-                LatteEngine::latteRenderToString(
-					'add_to_cart.latte', 
-					[
-						'success'    => true,
-						'cart_id'    => $cart_id,
-						'product_id' => $product_id,
-						'quantity'   => $quantity,
-						'remove_from_cart_text' => 'Remove from cart',
-						'cart_count' => WC()->cart->get_cart_contents_count(),
-						'cart_items' => WC()->cart->get_cart(),
-						'cart_total' => WC()->cart->get_cart_total(),
-					]
-				)
-            );
-
-			// return rest_ensure_response([
-			// 	'success'    => true,
-			// 	'cart_id'    => $cart_id,
-			// 	'product_id' => $product_id,
-			// 	'quantity'   => $quantity,
-			// 	'remove_from_cart_text' => 'Remove from cart',
-			// 	'cart_count' => WC()->cart->get_cart_contents_count(),
-			// 	'cart_items' => WC()->cart->get_cart(),
-			// 	'cart_total' => WC()->cart->get_cart_total(),
-			// ]);
-		} catch (Exception $e) {
+			$this->request = $request;
+			$method = $request->get_method();
+			return $this->$method(); // the handle method needs to return beacuse it's the callback of the register_rest_route
+		} 
+		catch (Exception $e) {
 			return $this->error('endpoint_error', $e->getMessage(), 500);
 		}
+	}
+
+
+	function POST()  {
+		$data = $this->parseRequest($this->request);
+
+		$product_id = absint($data['product_id'] ?? 0);
+		$quantity   = absint($data['quantity'] ?? 1);
+
+		if (!$product_id) {
+			return $this->error('no_product', 'Product ID is required', 400);
+		}
+
+		$cart_id = $this->resolveCartId($data);
+
+		$this->initWooSession($cart_id);
+
+		WC()->cart->add_to_cart($product_id, $quantity);
+
+		return new HtmlResponse(
+			LatteEngine::latteRenderToString(
+				'cart_products.latte', 
+				[
+					'success'    => true,
+					'cart_id'    => $cart_id,
+					'product_id' => $product_id,
+					'quantity'   => $quantity,
+					'cart_action_text' => 'Remove from cart',
+					'cart_count' => WC()->cart->get_cart_contents_count(),
+					'cart_items' => WC()->cart->get_cart(),
+					'cart_total' => WC()->cart->get_cart_total(),
+				]
+			)
+		);
+
+		// return rest_ensure_response([
+		// 	'success'    => true,
+		// 	'cart_id'    => $cart_id,
+		// 	'product_id' => $product_id,
+		// 	'quantity'   => $quantity,
+		// 	'remove_from_cart_text' => 'Remove from cart',
+		// 	'cart_count' => WC()->cart->get_cart_contents_count(),
+		// 	'cart_items' => WC()->cart->get_cart(),
+		// 	'cart_total' => WC()->cart->get_cart_total(),
+		// ]);
 	}
 
 	/**

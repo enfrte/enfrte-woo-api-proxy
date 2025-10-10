@@ -4,7 +4,9 @@ namespace Enfrte\WooApiProxy;
 
 use Enfrte\WooApiProxy\Endpoints\AlpineJsEndpoint;
 use Enfrte\WooApiProxy\Endpoints\HtmxEndpoint;
-use Enfrte\WooApiProxy\Endpoints\AddToCartEndpoint;
+use Enfrte\WooApiProxy\Endpoints\CartProductEndpoint;
+use Enfrte\WooApiProxy\HtmlResponse;
+
 
 class RegisterRestRoutes
 {
@@ -29,20 +31,20 @@ class RegisterRestRoutes
 	public function register_routes()
 	{
 		register_rest_route(self::ROUTE_PATH, '/hello-alpine', [
-			'methods'  => 'GET',
+			'methods'  => ['GET'],
 			'callback' => [new AlpineJsEndpoint(), 'handle'],
 			'permission_callback' => '__return_true',
 		]);
 
 		register_rest_route(self::ROUTE_PATH, '/hello-htmx', [
-			'methods'  => 'GET',
+			'methods'  => ['GET'],
 			'callback' => [new HtmxEndpoint(), 'handle'],
 			'permission_callback' => '__return_true',
 		]);
 
-		register_rest_route(self::ROUTE_PATH, '/add-to-cart', [
-			'methods'  => 'POST',
-			'callback' => [new AddToCartEndpoint(), 'handle'],
+		register_rest_route(self::ROUTE_PATH, '/cart-products', [
+			'methods'  => ['POST', 'DELETE'],
+			'callback' => [new CartProductEndpoint(), 'handle'],
 			'permission_callback' => '__return_true',
 		]);
 	}

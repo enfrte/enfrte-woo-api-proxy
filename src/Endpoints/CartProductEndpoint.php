@@ -14,7 +14,7 @@ use WP_REST_Response;
 
 
 /**
- * TODO: Leave handle. Break out the other methods into helper class for other endpoints.
+ * TODO: Leave handle and request methods. Break out the other methods into helper class for other endpoints.
  */
 class CartProductEndpoint
 {

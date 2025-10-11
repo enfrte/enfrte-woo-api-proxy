@@ -5,8 +5,8 @@ namespace Enfrte\WooApiProxy;
 use Enfrte\WooApiProxy\Endpoints\AlpineJsEndpoint;
 use Enfrte\WooApiProxy\Endpoints\HtmxEndpoint;
 use Enfrte\WooApiProxy\Endpoints\CartProductEndpoint;
+use Enfrte\WooApiProxy\Endpoints\HtmxClientSideTemplatesEndpoint;
 use Enfrte\WooApiProxy\HtmlResponse;
-
 
 class RegisterRestRoutes
 {
@@ -39,6 +39,12 @@ class RegisterRestRoutes
 		register_rest_route(self::ROUTE_PATH, '/hello-htmx', [
 			'methods'  => ['GET'],
 			'callback' => [new HtmxEndpoint(), 'handle'],
+			'permission_callback' => '__return_true',
+		]);
+
+		register_rest_route(self::ROUTE_PATH, '/hello-htmx-client-side-templates', [
+			'methods'  => ['GET'],
+			'callback' => [new HtmxClientSideTemplatesEndpoint(), 'handle'],
 			'permission_callback' => '__return_true',
 		]);
 
